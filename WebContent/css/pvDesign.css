@@ -1,0 +1,44 @@
+body {
+	font-family: "Open Sans","Helvetica Neue",sans-serif;
+	background-color: gray !important;
+}
+
+.ui-clock {
+	background-color: silver !important;
+	border-style: none !important;
+}
+
+.ui-g {
+	background-color: silver;	
+}
+
+.rot {
+	color:red;
+}
+
+.gruen {
+	color:green;
+}
+
+.gelb {
+	color:yellow;
+}
+
+.blau {
+	color: #007ad9;
+}
+
+.fett {
+	font-weight:bold;
+}
+
+.textCenter {
+	text-align: center;
+}
+.textRight {
+	text-align: right;
+}
+
+.noBorder {
+	border-style: none !important;
+}

@@ -1,0 +1,55 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:poll interval="5" listener="#{pvBean.ladePvDaten()}" update="pv" />
+
+<p:outputPanel id="pv" style="border-style:none">
+	<p:panelGrid>
+		<p:row>
+			<p:column colspan="7" styleClass="noBorder textCenter">
+				<i class="fa fa-certificate fa-2x gelb" />
+				<br />
+				<h:outputText id="gesamtPvLeistung" styleClass="gruen"
+					value="#{pvBean.pv.gesamtLeistungStr} W" style="font-weight:bold" />
+				<br />
+				<i class="fa fa-arrow-down fa-2x gruen" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column styleClass="noBorder textCenter" style="width: 70px">
+					<i class="fa fa-#{pvBean.batt.icon} fa-2x fa-rotate-270 blau" />
+			</p:column>
+			<p:column styleClass="noBorder textCenter" style="width: 80px">
+				<i class='fa fa-arrow-#{pvBean.batt.richtung} fa-2x #{pvBean.batt.farbe}' />
+			</p:column>
+			<p:column styleClass="noBorder textCenter" style="width: 80px">
+				<i class="fa fa-home fa-3x" />
+			</p:column>
+			<p:column styleClass="noBorder textCenter" style="width: 80px">
+				<i class="fa fa-arrow-#{pvBean.netz.richtung} fa-2x #{pvBean.netz.farbe}" />
+			</p:column>
+			<p:column styleClass="noBorder textCenter" style="width: 70px">
+				<i class="fa fa-bolt fa-3x rot" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column styleClass="noBorder textCenter" style="width: 70px">
+				<h:outputText class="fett blau"	value="#{pvBean.batt.ladeStandStr} %" />
+			</p:column>
+			<p:column styleClass="noBorder textCenter" style="width: 80px">
+				<h:outputText class="fett #{pvBean.batt.farbe}"	value="#{pvBean.batt.leistungStr} W" />
+			</p:column>
+			<p:column styleClass="noBorder textCenter" style="width: 80px">
+				<h:outputText class="fett" value="#{pvBean.verbrauch.gesamtVerbrauchStr} W" />
+			</p:column>
+			<p:column styleClass="noBorder textCenter" style="width: 80px">
+				<h:outputText class="fett #{pvBean.netz.farbe}"	value="#{pvBean.netz.leistungStr} W" />
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+</p:outputPanel>
+</html>

@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:growl id="growl" life="2000" />
+
+	<p:outputPanel id="pool" style="border-style:none">
+	
+		<p:panelGrid cellpadding="10">
+	
+			<p:row>
+				<p:column styleClass="textCenter noBorder">
+					<h:outputText value="Winter: " />
+				</p:column>
+				<p:column styleClass="textCenter noBorder">
+					<p:toggleSwitch value="#{poolBean.winter}"
+						styleClass="textCenter noBorder">
+						<p:ajax listener="#{poolBean.setPoolWinter()}" update="pool" />
+					</p:toggleSwitch>
+				</p:column>
+			</p:row>
+
+			<p:row>
+				<p:column styleClass="textCenter noBorder">
+					<h:outputText value="Automatik: " />
+				</p:column>
+				<p:column styleClass="textCenter noBorder">
+					<p:toggleSwitch value="#{poolBean.automatik}"
+						styleClass="textCenter noBorder" disabled="#{poolBean.automatikToggleDisabled}">
+						<p:ajax listener="#{poolBean.setPoolAutomatik()}" update="pool" />
+					</p:toggleSwitch>
+				</p:column>
+			</p:row>
+	
+			<p:row>
+				<p:column styleClass="textCenter noBorder">
+					<p:commandButton update="growl" value="Pumpe Ein"
+						action="#{poolBean.pumpeEin}"
+						disabled="#{poolBean.pumpeAnButtonDisabled}" />
+				</p:column>
+				<p:column styleClass="textCenter noBorder">
+					<p:commandButton update="growl" value="Pumpe Aus"
+						action="#{poolBean.pumpeAus}"
+						disabled="#{poolBean.pumpeAusButtonDisabled}" />
+				</p:column>
+				<p:column styleClass="textCenter noBorder">
+					<i class="fa fa-2x fa-fw fa-#{poolBean.pumpenIcon}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column styleClass="textCenter noBorder">
+					<p:commandButton update="growl" value="Heizung Ein"
+						action="#{poolBean.heizungEin}"
+						disabled="#{poolBean.heizungAnBottonDisabled}" />
+				</p:column>
+				<p:column styleClass="textCenter noBorder">
+					<p:commandButton update="growl" value="Heizung Aus"
+						action="#{poolBean.heizungAus}"
+						disabled="#{poolBean.heizungAusBottonDisabled}" />
+				</p:column>
+				<p:column styleClass="textCenter noBorder">
+					<i class="fa fa-2x fa-fw fa-#{poolBean.heizungIcon}" />
+				</p:column>
+			</p:row>
+	
+		</p:panelGrid>
+	
+		<p:autoUpdate />
+	
+	</p:outputPanel>
+</html>

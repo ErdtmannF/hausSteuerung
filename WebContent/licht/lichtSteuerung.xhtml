@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<p:outputPanel id="licht" style="border-style:none">
+
+	<p:panelGrid cellpadding="10">
+		<p:row>
+			<p:column>
+				<p:commandButton value="Alle Aus" id="alleAus"
+					action="#{lichtBean.alleAus()}" style="margin-right:20px;"
+					styleClass="ui-priority-primary" />
+				<p:commandButton value="Alle An" id="alleAn"
+					action="#{lichtBean.alleAn()}" style="margin-right:20px;"
+					styleClass="ui-priority-primary" />
+
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column styleClass="textCenter noBorder">
+				<div class="knob-container ui-corner-all">
+					<p:knob foregroundColor="#808080" backgroundColor="#0000FF"
+						value="#{lichtBean.geschwindigkeit}" />
+				</div>
+			</p:column>
+			<p:column styleClass="textCenter noBorder">
+				<p:inputText id="Helligkeit" value="#{lichtBean.helligkeit}" />
+				<p:slider for="Helligkeit" />
+			</p:column>
+		</p:row>
+	</p:panelGrid>
+
+
+</p:outputPanel>
+</html>

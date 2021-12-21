@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<p:poll interval="5" listener="#{pvBean.ladePvDaten()}" update="pvDetails" />
+
+<p:outputPanel id="pvDetails" style="border-style:none">
+
+	<p:fieldset legend="Batterie #{pvBean.batt.ladeStandStr} %" toggleable="true" toggleSpeed="300" collapsed="true">
+
+		<p:panelGrid>
+			<p:row>
+				<p:column styleClass="noBorder testCenter" colspan="2">
+					<b><h:outputText styleClass="#{pvBean.batt.farbe}" value="#{pvBean.batt.ladung}" /></b>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column styleClass="noBorder">
+					<b>Ladestand:</b>
+				</p:column>
+				<p:column styleClass="noBorder">
+					<h:outputText id="ladeStand" value="#{pvBean.batt.ladeStandStr} %" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column styleClass="noBorder">
+					<b>Spannung:</b>
+				</p:column>
+				<p:column styleClass="noBorder">
+					<h:outputText id="spannung" value="#{pvBean.batt.spannungNachkomma} V" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column styleClass="noBorder">
+					<b>Strom:</b>
+				</p:column>
+				<p:column styleClass="noBorder">
+					<h:outputText id="strom" value="#{pvBean.batt.ladeStromNachkomma} A" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column styleClass="noBorder">
+					<b>Leistung:</b>
+				</p:column>
+				<p:column styleClass="noBorder">
+					<h:outputText id="leistung" value="#{pvBean.batt.leistungNachkomma} W" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column styleClass="noBorder">
+					<b>Temperatur:</b>
+				</p:column>
+				<p:column styleClass="noBorder">
+					<h:outputText id="temperatur" value="#{pvBean.batt.temperatur} °C" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column styleClass="noBorder">
+					<b>Ladezyklen:</b>
+				</p:column>
+				<p:column styleClass="noBorder">
+					<h:outputText id="zyklen" value="#{pvBean.batt.ladeZyklenStr}" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:fieldset>
+</p:outputPanel>
+</html>
