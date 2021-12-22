@@ -1,6 +1,6 @@
 package de.erdtmann.soft.hausSteuerung.pv.utils;
 
-public interface PvConstants {
+public final class PvConstants {
 
 	public static final String INVERTER_URL = "192.168.178.71";
 	public static final int INVERTER_PORT = 1502;

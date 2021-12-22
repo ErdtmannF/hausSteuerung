@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import de.erdtmann.soft.hausSteuerung.core.CoreService;
-import de.erdtmann.soft.hausSteuerung.core.utils.KonfigNames;
 import de.erdtmann.soft.hausSteuerung.pool.HeizungService;
 import de.erdtmann.soft.hausSteuerung.pool.PumpenService;
 import de.erdtmann.soft.hausSteuerung.pool.exceptions.HeizungException;
@@ -182,10 +181,6 @@ public class PoolBean implements Serializable {
 
 	public boolean isPumpeAusButtonDisabled() {
 		return !pumpeAn || automatik || winter;
-	}
-
-	public boolean isAutomatikToggleDisabled() {
-		return winter;
 	}
 	
 	public boolean isHeizungAn() {

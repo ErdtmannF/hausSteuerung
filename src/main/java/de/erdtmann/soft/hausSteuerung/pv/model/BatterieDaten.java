@@ -1,10 +1,13 @@
 package de.erdtmann.soft.hausSteuerung.pv.model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 
-public class BatterieDaten {
+public class BatterieDaten implements Serializable {
+
+	private static final long serialVersionUID = -1691387580771890875L;
 
 	private float ladeZyklen;
 	private float ladeStrom;

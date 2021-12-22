@@ -1,17 +1,14 @@
 package de.erdtmann.soft.hausSteuerung.core;
 
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import de.erdtmann.soft.hausSteuerung.core.entities.KonfigurationE;
-import de.erdtmann.soft.hausSteuerung.core.utils.CoreConstants;
 import de.erdtmann.soft.hausSteuerung.core.utils.KonfigNames;
 
 

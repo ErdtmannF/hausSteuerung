@@ -1,7 +1,6 @@
 package de.erdtmann.soft.hausSteuerung.login;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;

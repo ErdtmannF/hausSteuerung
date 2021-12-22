@@ -1,7 +1,7 @@
 package de.erdtmann.soft.hausSteuerung.licht.utils;
 
 
-public interface LichtConstants {
+public final class LichtConstants {
 
 	public static final String REST_LICHT_URL = "http://partyraumpi:9898";
 	

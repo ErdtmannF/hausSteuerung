@@ -1,9 +1,12 @@
 package de.erdtmann.soft.hausSteuerung.pv.model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-public class NetzDaten {
+public class NetzDaten implements Serializable {
+
+	private static final long serialVersionUID = -701813234802852044L;
 
 	private float leistung;
 	private String richtung;

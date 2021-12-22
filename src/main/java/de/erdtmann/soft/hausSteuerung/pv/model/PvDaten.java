@@ -1,9 +1,12 @@
 package de.erdtmann.soft.hausSteuerung.pv.model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-public class PvDaten {
+public class PvDaten implements Serializable {
+
+	private static final long serialVersionUID = -5226816382430205430L;
 
 	private Phase dcString1;
 	private Phase dcString2;

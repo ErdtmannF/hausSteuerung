@@ -1,10 +1,13 @@
 package de.erdtmann.soft.hausSteuerung.pv.model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 
-public class Verbrauch {
+public class Verbrauch implements Serializable {
+
+	private static final long serialVersionUID = 5421698026411882762L;
 
 	private float vonBatt;
 	private float vonPv;
