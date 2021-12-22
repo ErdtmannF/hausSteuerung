@@ -20,8 +20,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -109,7 +109,7 @@
 			<artifactId>easymodbus</artifactId>
 			<version>1.0.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}\WebContent\WEB-INF\lib\EasyModbusJava.jar</systemPath>
+			<systemPath>${project.basedir}/WebContent/WEB-INF/lib/EasyModbusJava.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
