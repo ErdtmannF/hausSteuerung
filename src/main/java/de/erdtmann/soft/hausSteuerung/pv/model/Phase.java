@@ -1,7 +1,10 @@
 package de.erdtmann.soft.hausSteuerung.pv.model;
 
+import java.io.Serializable;
 
-public class Phase {
+public class Phase implements Serializable {
+
+	private static final long serialVersionUID = 6637483444576793641L;
 
 	private float strom;
 	private float spannung;

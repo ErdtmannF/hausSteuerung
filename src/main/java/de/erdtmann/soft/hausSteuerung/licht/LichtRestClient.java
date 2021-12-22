@@ -27,12 +27,12 @@ public class LichtRestClient {
 										.post(Entity.text(""));
 		
 		if (response.getStatus() != 200) {
-			log.error("Fehler beim Ausschalten der LEDs");
-			log.error("Response Staus: " + response.getStatus());
+			logError("Fehler beim Ausschalten der LEDs", response);
 		}
 		
 		return response.getStatus();
 	}
+
 
 	public int alleLEDsAn() {
 		
@@ -45,8 +45,7 @@ public class LichtRestClient {
 										.post(Entity.text(""));
 		
 		if (response.getStatus() != 200) {
-			log.error("Fehler beim Einschalten der LEDs");
-			log.error("Response Staus: " + response.getStatus());
+			logError("Fehler beim Einschalten der LEDs", response);
 		}
 		
 		return response.getStatus();
@@ -65,11 +64,15 @@ public class LichtRestClient {
 										.post(Entity.text(""));
 		
 		if (response.getStatus() != 200) {
-			log.error("Fehler beim aendern der Helligkeit");
-			log.error("Response Staus: " + response.getStatus());
+			logError("Fehler beim aendern der Helligkeit", response);
 		}
 		return response.getStatus();
 	}
-	
+
+	private void logError(String text, Response response) {
+		log.error(text);
+		log.error("Response Staus: " + response.getStatus());
+	}
+
 	
 }

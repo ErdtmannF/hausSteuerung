@@ -1,5 +1,6 @@
 package de.erdtmann.soft.hausSteuerung.pv.entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -17,7 +18,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PV_LEISTUNGEN")
-public class LeistungE {
+public class LeistungE implements Serializable {
+
+	private static final long serialVersionUID = 2937762937452553953L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

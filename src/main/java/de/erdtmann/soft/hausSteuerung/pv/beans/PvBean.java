@@ -78,66 +78,66 @@ public class PvBean implements Serializable {
 		hausverbrauchGesamt = pvService.ladeVerbrauchTagTyp(datum, 8);
 		pvLeistung = pvService.ladeVerbrauchTagTyp(datum, 6);
 		
-		LineChartSeries battLadung = new LineChartSeries();
-		battLadung.setLabel("Ladestand");
-		battLadung.setShowMarker(false);
-		battLadung.setFill(false);
-		battLadung.setDisableStack(true);
-		battLadung.setXaxis(AxisType.X);
-		battLadung.setYaxis(AxisType.Y2);
+		LineChartSeries battLadungChartSerie = new LineChartSeries();
+		battLadungChartSerie.setLabel("Ladestand");
+		battLadungChartSerie.setShowMarker(false);
+		battLadungChartSerie.setFill(false);
+		battLadungChartSerie.setDisableStack(true);
+		battLadungChartSerie.setXaxis(AxisType.X);
+		battLadungChartSerie.setYaxis(AxisType.Y2);
 		
-		LineChartSeries batterie = new LineChartSeries();
-		batterie.setLabel("Verbrauch von Batterie");
-		batterie.setShowMarker(false);
-		batterie.setFill(true);
-		batterie.setFillAlpha(1);
+		LineChartSeries batterieChartSerie = new LineChartSeries();
+		batterieChartSerie.setLabel("Verbrauch von Batterie");
+		batterieChartSerie.setShowMarker(false);
+		batterieChartSerie.setFill(true);
+		batterieChartSerie.setFillAlpha(1);
 		
-		LineChartSeries pv = new LineChartSeries();
-		pv.setLabel("Verbrauch von PV");
-		pv.setShowMarker(false);
-		pv.setFill(true);
-		pv.setFillAlpha(0.9);
+		LineChartSeries pvChartSerie = new LineChartSeries();
+		pvChartSerie.setLabel("Verbrauch von PV");
+		pvChartSerie.setShowMarker(false);
+		pvChartSerie.setFill(true);
+		pvChartSerie.setFillAlpha(0.9);
 		
-		LineChartSeries netz = new LineChartSeries();
-		netz.setLabel("Verbrauch von Netz");
-		netz.setShowMarker(false);
-		netz.setFill(true);
-		netz.setFillAlpha(0.75);
+		LineChartSeries netzChartSerie = new LineChartSeries();
+		netzChartSerie.setLabel("Verbrauch von Netz");
+		netzChartSerie.setShowMarker(false);
+		netzChartSerie.setFill(true);
+		netzChartSerie.setFillAlpha(0.75);
 	
-		LineChartSeries pvDach = new LineChartSeries();
-		pvDach.setLabel("PV Leistung");
-		pvDach.setDisableStack(true);
-		pvDach.setShowMarker(false);
-		pvDach.setFill(true);
-		pvDach.setFillAlpha(0.50);
+		LineChartSeries pvDachChartSerie = new LineChartSeries();
+		pvDachChartSerie.setLabel("PV Leistung");
+		pvDachChartSerie.setDisableStack(true);
+		pvDachChartSerie.setShowMarker(false);
+		pvDachChartSerie.setFill(true);
+		pvDachChartSerie.setFillAlpha(0.50);
 
-		LineChartSeries hausverbrauch = new LineChartSeries();
-		hausverbrauch.setLabel("Hausverbrauch");
-		hausverbrauch.setDisableStack(true);
-		hausverbrauch.setShowMarker(false);
-		hausverbrauch.setFill(false);
+		LineChartSeries hausverbrauchChartSerie = new LineChartSeries();
+		hausverbrauchChartSerie.setLabel("Hausverbrauch");
+		hausverbrauchChartSerie.setDisableStack(true);
+		hausverbrauchChartSerie.setShowMarker(false);
+		hausverbrauchChartSerie.setFill(false);
 		
 
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 		
 		for (BattLadungE value : battLadungTag) {
-			battLadung.set(value.getZeit().format(dtf), value.getWert());
+			battLadungChartSerie.set(value.getZeit().format(dtf), value.getWert());
 		}
 		for (LeistungE value : tagesVerbrauchBatt) {
-			batterie.set(value.getZeit().format(dtf), value.getWert());
+			batterieChartSerie.set(value.getZeit().format(dtf), value.getWert());
 		}
 		for (LeistungE value : tagesVerbrauchNetz) {
-			netz.set(value.getZeit().format(dtf), value.getWert());
+			netzChartSerie.set(value.getZeit().format(dtf), value.getWert());
 		}
 		for (LeistungE value : tagesVerbrauchPv) {
-			pv.set(value.getZeit().format(dtf), value.getWert());
+			pvChartSerie.set(value.getZeit().format(dtf), value.getWert());
 		}
 		for (LeistungE value : pvLeistung) {
-			pvDach.set(value.getZeit().format(dtf), value.getWert());
+			pvDachChartSerie.set(value.getZeit().format(dtf), value.getWert());
 		}
 		for (LeistungE value : hausverbrauchGesamt) {
-			hausverbrauch.set(value.getZeit().format(dtf), value.getWert());
+			hausverbrauchChartSerie.set(value.getZeit().format(dtf), value.getWert());
 		}
 		
 
@@ -147,15 +147,15 @@ public class PvBean implements Serializable {
 		pvChart.setAnimate(true);
 		pvChart.setStacked(true);
 		
-		pvChart.addSeries(netz);
-		pvChart.addSeries(pv);
-		pvChart.addSeries(batterie);
+		pvChart.addSeries(netzChartSerie);
+		pvChart.addSeries(pvChartSerie);
+		pvChart.addSeries(batterieChartSerie);
 		
 		
-		pvChart.addSeries(pvDach);
-		pvChart.addSeries(battLadung);
+		pvChart.addSeries(pvDachChartSerie);
+		pvChart.addSeries(battLadungChartSerie);
 		
-		pvChart.addSeries(hausverbrauch);
+		pvChart.addSeries(hausverbrauchChartSerie);
 		
 		pvChart.setSeriesColors("fc0303,00fc19,006dfc,fcee30,000000,666666");
 

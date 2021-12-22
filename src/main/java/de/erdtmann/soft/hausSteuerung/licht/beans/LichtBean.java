@@ -28,7 +28,7 @@ public class LichtBean implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		
+		// Aktuell nichts zu tun beim Starten
 	}
 
 	

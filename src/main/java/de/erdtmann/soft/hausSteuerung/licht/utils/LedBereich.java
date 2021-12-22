@@ -43,7 +43,7 @@ public class LedBereich {
 		}
 		
 		public Builder withEnde(int wert) {
-			this.anfang = wert;
+			this.ende = wert;
 			return this;
 		}
 
