@@ -15,12 +15,12 @@
 		<p:panelGrid>
 			<p:row>
 				<p:column styleClass="noBorder testCenter" colspan="2">
-					<b><h:outputText styleClass="#{pvBean.batt.farbe}" value="#{pvBean.batt.ladung}" /></b>
+					<strong><h:outputText styleClass="#{pvBean.batt.farbe}" value="#{pvBean.batt.ladung}" /></strong>
 				</p:column>
 			</p:row>
 			<p:row>
 				<p:column styleClass="noBorder">
-					<b>Ladestand:</b>
+					<strong>Ladestand:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
 					<h:outputText id="ladeStand" value="#{pvBean.batt.ladeStandStr} %" />
@@ -28,7 +28,7 @@
 			</p:row>
 			<p:row>
 				<p:column styleClass="noBorder">
-					<b>Spannung:</b>
+					<strong>Spannung:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
 					<h:outputText id="spannung" value="#{pvBean.batt.spannungNachkomma} V" />
@@ -36,7 +36,7 @@
 			</p:row>
 			<p:row>
 				<p:column styleClass="noBorder">
-					<b>Strom:</b>
+					<strong>Strom:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
 					<h:outputText id="strom" value="#{pvBean.batt.ladeStromNachkomma} A" />
@@ -44,7 +44,7 @@
 			</p:row>
 			<p:row>
 				<p:column styleClass="noBorder">
-					<b>Leistung:</b>
+					<strong>Leistung:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
 					<h:outputText id="leistung" value="#{pvBean.batt.leistungNachkomma} W" />
@@ -52,7 +52,7 @@
 			</p:row>
 			<p:row>
 				<p:column styleClass="noBorder">
-					<b>Temperatur:</b>
+					<strong>Temperatur:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
 					<h:outputText id="temperatur" value="#{pvBean.batt.temperatur} °C" />
@@ -60,7 +60,7 @@
 			</p:row>
 			<p:row>
 				<p:column styleClass="noBorder">
-					<b>Ladezyklen:</b>
+					<strong>Ladezyklen:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
 					<h:outputText id="zyklen" value="#{pvBean.batt.ladeZyklenStr}" />
