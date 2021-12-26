@@ -11,7 +11,6 @@ import javax.inject.Named;
 import de.erdtmann.soft.haussteuerung.core.CoreService;
 import de.erdtmann.soft.haussteuerung.pool.HeizungService;
 import de.erdtmann.soft.haussteuerung.pool.PumpenService;
-import de.erdtmann.soft.haussteuerung.pool.exceptions.HeizungException;
 import de.erdtmann.soft.haussteuerung.pool.exceptions.PumpenException;
 import de.erdtmann.soft.haussteuerung.pool.utils.Heizung;
 import de.erdtmann.soft.haussteuerung.pool.utils.Pumpe;
@@ -124,12 +123,9 @@ public class PoolBean implements Serializable {
 
 	public void heizungEin() {
 		int status = 0;
-		try {
-			status = heizungService.schalteHeizung(Heizung.AN);
-		} catch (HeizungException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		status = heizungService.schalteHeizung(Heizung.AN);
+		
 
 		if (status == 200) {
 			addMessage("Heizung eingeschaltet!");
@@ -141,12 +137,9 @@ public class PoolBean implements Serializable {
 
 	public void heizungAus() {
 		int status = 0;
-		try {
-			status = heizungService.schalteHeizung(Heizung.AUS);
-		} catch (HeizungException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		status = heizungService.schalteHeizung(Heizung.AUS);
+		
 		
 		if (status == 200) {
 			addMessage("Heizung ausgeschaltet!");
