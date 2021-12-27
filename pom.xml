@@ -13,7 +13,7 @@
 		<sonar.organization>erdtmannf</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -103,6 +103,12 @@
 			<groupId>com.intelligt.modbus</groupId>
 			<artifactId>jlibmodbus</artifactId>
 			<version>1.2.9.7</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.re</groupId>
