@@ -22,6 +22,7 @@ public class NetzDaten implements Serializable {
 	public NetzDaten(Builder builder) {
 		symbols = new DecimalFormatSymbols();
 		symbols.setMinusSign(' ');
+		symbols.setDecimalSeparator(',');
 		df = new DecimalFormat("#", symbols);
 		
 		setLeistung(builder.leistung);

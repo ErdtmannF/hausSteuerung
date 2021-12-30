@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
-
 public class BatterieDaten implements Serializable {
 
 	private static final long serialVersionUID = -1691387580771890875L;
@@ -31,6 +30,7 @@ public class BatterieDaten implements Serializable {
 	public BatterieDaten(Builder builder) {
 		symbols = new DecimalFormatSymbols();
 		symbols.setMinusSign(' ');
+		symbols.setDecimalSeparator(',');
 		df = new DecimalFormat("#", symbols);
 		dfNachkomma = new DecimalFormat("####.##", symbols);
 		
