@@ -24,6 +24,7 @@ public class Verbrauch implements Serializable {
 	public Verbrauch(Builder builder) {
 		symbols = new DecimalFormatSymbols();
 		symbols.setMinusSign(' ');
+		symbols.setDecimalSeparator(',');
 		df = new DecimalFormat("#", symbols);
 
 		setVonBatt(builder.vonBatt);
