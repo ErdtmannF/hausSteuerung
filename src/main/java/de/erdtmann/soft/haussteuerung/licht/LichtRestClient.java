@@ -8,8 +8,8 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.logging.Logger;
 
-import de.erdtmann.soft.haussteuerung.licht.utils.LichtConstants;
-import de.erdtmann.soft.haussteuerung.licht.utils.WsLedModus;
+import de.erdtmann.soft.utils.licht.LichtConstants;
+import de.erdtmann.soft.utils.licht.WsLedModus;
 
 @ApplicationScoped
 public class LichtRestClient {
