@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
                                             
+=======
+                                                
+    
+>>>>>>> refs/remotes/origin/trunk
     
     
     
@@ -10,7 +15,12 @@
     
     
     <wb-module deploy-name="hausSteuerung-1.0.0">
+<<<<<<< HEAD
                                                                                         
+=======
+                                                                                                
+        
+>>>>>>> refs/remotes/origin/trunk
         
         
         
@@ -21,7 +31,12 @@
         
         
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+<<<<<<< HEAD
                                                                                         
+=======
+                                                                                                
+        
+>>>>>>> refs/remotes/origin/trunk
         
         
         
@@ -32,7 +47,12 @@
         
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+<<<<<<< HEAD
                                                                                         
+=======
+                                                                                                
+        
+>>>>>>> refs/remotes/origin/trunk
         
         
         
@@ -43,7 +63,12 @@
         
         
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+<<<<<<< HEAD
                                                                 
+=======
+                                                                        
+        
+>>>>>>> refs/remotes/origin/trunk
         
         
         
@@ -51,7 +76,12 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+<<<<<<< HEAD
                                                                 
+=======
+                                                                        
+        
+>>>>>>> refs/remotes/origin/trunk
         
         
         
@@ -62,7 +92,12 @@
         <dependent-module archiveName="utilsPackage-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/utilsPackage/utilsPackage">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+<<<<<<< HEAD
                                                                                         
+=======
+                                                                                                
+        
+>>>>>>> refs/remotes/origin/trunk
         
         
         
@@ -73,7 +108,12 @@
         
         
         <property name="context-root" value="hausSteuerung"/>
+<<<<<<< HEAD
                                                                                         
+=======
+                                                                                                
+        
+>>>>>>> refs/remotes/origin/trunk
         
         
         
@@ -84,7 +124,12 @@
         
         
         <property name="java-output-path" value="/hausSteuerung/target/classes"/>
+<<<<<<< HEAD
                                                                                     
+=======
+                                                                                            
+    
+>>>>>>> refs/remotes/origin/trunk
     
     
     
@@ -95,7 +140,12 @@
     
     
     </wb-module>
+<<<<<<< HEAD
                                         
+=======
+                                            
+
+>>>>>>> refs/remotes/origin/trunk
 
 
 

@@ -23,13 +23,6 @@ public class PvRepository {
 	@PersistenceContext
 	EntityManager em;
 
-//	public List<PvModbusE> holeAlleModbus() {
-//		TypedQuery<PvModbusE> query = em.createNamedQuery("Pv.holeAlleModbus", PvModbusE.class);
-//
-//		List<PvModbusE> modbusList = query.getResultList();
-//	
-//		return modbusList;
-//	}
 
 	public void speichereLeistung(LeistungE leistung) {
 		em.persist(leistung);	
@@ -55,6 +48,4 @@ public class PvRepository {
 		
 		return query.getResultList();
 	}
-	
-	
 }

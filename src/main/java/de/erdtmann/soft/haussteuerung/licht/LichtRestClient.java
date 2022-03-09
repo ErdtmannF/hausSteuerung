@@ -1,7 +1,7 @@
 package de.erdtmann.soft.haussteuerung.licht;
 
-import javax.ws.rs.client.Client;
 import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
