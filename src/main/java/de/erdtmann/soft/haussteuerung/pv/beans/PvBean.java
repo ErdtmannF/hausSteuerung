@@ -12,6 +12,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.logging.Logger;
+import org.primefaces.PrimeFaces;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.DateAxis;
@@ -34,6 +36,8 @@ public class PvBean implements Serializable {
 
 	private static final long serialVersionUID = -1428278999862364206L;
 
+	Logger log = Logger.getLogger(PvBean.class);
+	
 	@Inject
 	PvService pvService;
 	
@@ -54,6 +58,7 @@ public class PvBean implements Serializable {
 
 	private LocalDate datum;
 
+	private int progressChart;
 	
 	@PostConstruct
 	public void init() {
@@ -71,12 +76,22 @@ public class PvBean implements Serializable {
 	
 	public void ladeChart() {
 		battLadungTag = pvService.ladeBattLadungTag(datum);
-
+		progressChart = progressChart + 15;
+		
 		tagesVerbrauchBatt = pvService.ladeVerbrauchTagTyp(datum, 1);
+		progressChart = progressChart + 17;
+		
 		tagesVerbrauchPv = pvService.ladeVerbrauchTagTyp(datum, 2);
+		progressChart = progressChart + 17;
+		
 		tagesVerbrauchNetz = pvService.ladeVerbrauchTagTyp(datum, 3);
+		progressChart = progressChart + 17;
+		
 		hausverbrauchGesamt = pvService.ladeVerbrauchTagTyp(datum, 8);
+		progressChart = progressChart + 17;
+		
 		pvLeistung = pvService.ladeVerbrauchTagTyp(datum, 6);
+		progressChart = progressChart + 17;
 		
 		LineChartSeries battLadungChartSerie = new LineChartSeries();
 		battLadungChartSerie.setLabel("Ladestand");
@@ -184,14 +199,27 @@ public class PvBean implements Serializable {
 
 	}
 	
+	public void showProgress() {
+	    PrimeFaces.current().dialog().openDynamic("progressDialog");
+	}
+	
+	public void hideProgress() {
+		PrimeFaces.current().dialog().closeDynamic(null);
+		progressChart = 0;
+	}
+	
 	public void datumPlus() {
+		showProgress();
 		datum = datum.plusDays(1);
 		ladeChart();
+		hideProgress();
 	}
 	
 	public void datumMinus() {
+		showProgress();
 		datum = datum.minusDays(1);
 		ladeChart();
+		hideProgress();
 	}
 	
 	public BatterieDaten getBatt() {
@@ -220,6 +248,10 @@ public class PvBean implements Serializable {
 
 	public void setDatum(LocalDate datum) {
 		this.datum = datum;
+	}
+
+	public int getProgressChart() {
+		return progressChart;
 	}
 	
 	

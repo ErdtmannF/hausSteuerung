@@ -23,14 +23,9 @@
 		</p:row>
 		<p:row>
 			<p:column styleClass="textCenter noBorder">
-				<div class="knob-container ui-corner-all">
-					<p:knob foregroundColor="#808080" backgroundColor="#0000FF"
-						value="#{lichtBean.geschwindigkeit}" />
-				</div>
-			</p:column>
-			<p:column styleClass="textCenter noBorder">
-				<p:inputText id="Helligkeit" value="#{lichtBean.helligkeit}" />
-				<p:slider for="Helligkeit" />
+				<p:spinner id="hellSpinn" min="5" max="500" stepFactor="5" value="#{lichtBean.helligkeit}">
+				</p:spinner>
+				<p:slider for="hellSpinn" minValue="5" maxValue="500" step="5"  />
 			</p:column>
 		</p:row>
 	</p:panelGrid>

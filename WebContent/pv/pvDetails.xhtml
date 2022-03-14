@@ -1,21 +1,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="de" 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<p:poll interval="5" listener="#{pvBean.ladePvDaten()}" update="pvDetails" />
+
+<p:poll interval="5" listener="#{pvBean.ladePvDaten()}"
+	update="pvDetails" />
 
 <p:outputPanel id="pvDetails" style="border-style:none">
 
-	<p:fieldset legend="Batterie #{pvBean.batt.ladeStandStr} %" toggleable="true" toggleSpeed="300" collapsed="true">
+	<p:fieldset legend="Batterie #{pvBean.batt.ladeStandStr} %"
+		toggleable="true" toggleSpeed="300" collapsed="true">
 
 		<p:panelGrid>
 			<p:row>
 				<p:column styleClass="noBorder testCenter" colspan="2">
-					<strong><h:outputText styleClass="#{pvBean.batt.farbe}" value="#{pvBean.batt.ladung}" /></strong>
+					<strong><h:outputText styleClass="#{pvBean.batt.farbe}"
+							value="#{pvBean.batt.ladung}" /></strong>
 				</p:column>
 			</p:row>
 			<p:row>
@@ -31,7 +34,8 @@
 					<strong>Spannung:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
-					<h:outputText id="spannung" value="#{pvBean.batt.spannungNachkomma} V" />
+					<h:outputText id="spannung"
+						value="#{pvBean.batt.spannungNachkomma} V" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -39,7 +43,8 @@
 					<strong>Strom:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
-					<h:outputText id="strom" value="#{pvBean.batt.ladeStromNachkomma} A" />
+					<h:outputText id="strom"
+						value="#{pvBean.batt.ladeStromNachkomma} A" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -47,7 +52,8 @@
 					<strong>Leistung:</strong>
 				</p:column>
 				<p:column styleClass="noBorder">
-					<h:outputText id="leistung" value="#{pvBean.batt.leistungNachkomma} W" />
+					<h:outputText id="leistung"
+						value="#{pvBean.batt.leistungNachkomma} W" />
 				</p:column>
 			</p:row>
 			<p:row>
@@ -69,4 +75,5 @@
 		</p:panelGrid>
 	</p:fieldset>
 </p:outputPanel>
+
 </html>

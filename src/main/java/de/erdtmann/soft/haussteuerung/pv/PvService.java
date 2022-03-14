@@ -7,6 +7,8 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
+
 import de.erdtmann.soft.haussteuerung.core.CoreService;
 import de.erdtmann.soft.haussteuerung.pv.entities.BattLadungE;
 import de.erdtmann.soft.haussteuerung.pv.entities.LeistungE;
@@ -23,6 +25,8 @@ import de.erdtmann.soft.haussteuerung.pv.utils.PvFloatRegister;
 @ApplicationScoped
 public class PvService {
 
+	Logger log = Logger.getLogger(PvService.class);
+	
 	@Inject
 	PvModbusClient pvModbusClient;
 

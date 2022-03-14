@@ -1,6 +1,5 @@
 autoEnabled=true
 eclipse.preferences.version=1
-fileExclusions=DIRECTORY\:target
 idePrefixKey=
 projectKey=de.erdtmann.soft\:hausSteuerung
 serverId=SonarCloud/erdtmannf
