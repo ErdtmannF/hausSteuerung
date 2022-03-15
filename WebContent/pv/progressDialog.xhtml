@@ -4,7 +4,13 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
-<p:progressBar ajax="true" value="#{pvBean.progressChart}" />
-
+	
+	<h:head>
+		<title>Chart Progress</title>
+	</h:head>
+	<h:body>
+		<p:progressBar id="pvChartProgress" ajax="true"	value="#{pvBean.progressChart}">
+			<p:autoUpdate />
+		</p:progressBar>
+	</h:body>
 </html>

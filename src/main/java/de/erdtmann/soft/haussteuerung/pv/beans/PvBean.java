@@ -58,7 +58,7 @@ public class PvBean implements Serializable {
 
 	private LocalDate datum;
 
-	private int progressChart;
+	private Integer progressChart = 0;
 	
 	@PostConstruct
 	public void init() {
@@ -75,6 +75,7 @@ public class PvBean implements Serializable {
 	}
 	
 	public void ladeChart() {
+		progressChart = 0;
 		battLadungTag = pvService.ladeBattLadungTag(datum);
 		progressChart = progressChart + 15;
 		
@@ -200,26 +201,38 @@ public class PvBean implements Serializable {
 	}
 	
 	public void showProgress() {
-	    PrimeFaces.current().dialog().openDynamic("progressDialog");
+		PrimeFaces.current().dialog().openDynamic("progressDialog");
 	}
 	
 	public void hideProgress() {
 		PrimeFaces.current().dialog().closeDynamic(null);
-		progressChart = 0;
+		progressChart = 0;		
 	}
 	
 	public void datumPlus() {
+		log.warn("Vor Show Progress");
 		showProgress();
+		log.warn("Nach Show Progress");
 		datum = datum.plusDays(1);
+		log.warn("Vor LadeChart");
 		ladeChart();
-		hideProgress();
+		log.warn("Nach LadeChart");
+		log.warn("Vor Hide Progress");
+//		hideProgress();
+		log.warn("Nach Hide Progress");
 	}
 	
 	public void datumMinus() {
+		log.warn("Vor Show Progress");
 		showProgress();
+		log.warn("Nach Show Progress");
 		datum = datum.minusDays(1);
+		log.warn("Vor LadeChart");
 		ladeChart();
-		hideProgress();
+		log.warn("Nach LadeChart");
+		log.warn("Vor Hide Progress");
+//		hideProgress();
+		log.warn("Nach Hide Progress");
 	}
 	
 	public BatterieDaten getBatt() {
@@ -250,7 +263,7 @@ public class PvBean implements Serializable {
 		this.datum = datum;
 	}
 
-	public int getProgressChart() {
+	public Integer getProgressChart() {
 		return progressChart;
 	}
 	
