@@ -58,7 +58,7 @@ public class PvBean implements Serializable {
 
 	private LocalDate datum;
 
-	private Integer progressChart = 0;
+	private int progressChart = 0;
 	
 	@PostConstruct
 	public void init() {
@@ -75,6 +75,7 @@ public class PvBean implements Serializable {
 	}
 	
 	public void ladeChart() {
+		
 		progressChart = 0;
 		battLadungTag = pvService.ladeBattLadungTag(datum);
 		progressChart = progressChart + 15;
@@ -93,6 +94,7 @@ public class PvBean implements Serializable {
 		
 		pvLeistung = pvService.ladeVerbrauchTagTyp(datum, 6);
 		progressChart = progressChart + 17;
+		
 		
 		LineChartSeries battLadungChartSerie = new LineChartSeries();
 		battLadungChartSerie.setLabel("Ladestand");
@@ -160,7 +162,7 @@ public class PvBean implements Serializable {
 		pvChart = new LineChartModel();
 		pvChart.setZoom(true);
 		pvChart.setShadow(false);
-		pvChart.setAnimate(true);
+		pvChart.setAnimate(false);
 		pvChart.setStacked(true);
 		
 		pvChart.addSeries(netzChartSerie);
@@ -206,33 +208,20 @@ public class PvBean implements Serializable {
 	
 	public void hideProgress() {
 		PrimeFaces.current().dialog().closeDynamic(null);
-		progressChart = 0;		
 	}
 	
 	public void datumPlus() {
-		log.warn("Vor Show Progress");
-		showProgress();
-		log.warn("Nach Show Progress");
+//		showProgress();
 		datum = datum.plusDays(1);
-		log.warn("Vor LadeChart");
 		ladeChart();
-		log.warn("Nach LadeChart");
-		log.warn("Vor Hide Progress");
 //		hideProgress();
-		log.warn("Nach Hide Progress");
 	}
 	
 	public void datumMinus() {
-		log.warn("Vor Show Progress");
-		showProgress();
-		log.warn("Nach Show Progress");
+//		showProgress();
 		datum = datum.minusDays(1);
-		log.warn("Vor LadeChart");
 		ladeChart();
-		log.warn("Nach LadeChart");
-		log.warn("Vor Hide Progress");
 //		hideProgress();
-		log.warn("Nach Hide Progress");
 	}
 	
 	public BatterieDaten getBatt() {
@@ -263,7 +252,7 @@ public class PvBean implements Serializable {
 		this.datum = datum;
 	}
 
-	public Integer getProgressChart() {
+	public int getProgressChart() {
 		return progressChart;
 	}
 	

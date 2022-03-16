@@ -7,15 +7,17 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-	<p:commandButton action="#{pvBean.datumMinus()}" update="pvChart, datum" title="Tag zurück" icon="fa fa-chevron-left" />
+	<p:commandButton action="#{pvBean.datumMinus}" update="pvChart, datum" title="Tag zurück" icon="fa fa-chevron-left" />
 
 	<p:datePicker id="datum" value="#{pvBean.datum}" pattern="dd.MM.yyyy">
 		<p:ajax event="dateSelect" listener="#{pvBean.ladeChart}" update="pvChart" />
 	</p:datePicker>
 	
-	<p:commandButton action="#{pvBean.datumPlus()}" update="pvChart, datum"	title="Tag vor" icon="fa fa-chevron-right" />
+	<p:commandButton action="#{pvBean.datumPlus}" update="pvChart, datum"	title="Tag vor" icon="fa fa-chevron-right" />
 
 	<p:commandButton action="#{pvBean.ladeChart}" update="pvChart" icon="fa fa-refresh" />	
+	<p:progressBar id="pvChartProgress" ajax="true"	value="#{pvBean.progressChart}" global="false" styleClass="animated" />
+	
 	<p:chart id="pvChart" type="line" model="#{pvBean.pvChart}"></p:chart>
 
 </html>
