@@ -58,7 +58,7 @@ public class PvBean implements Serializable {
 
 	private LocalDate datum;
 
-	private int progressChart = 0;
+	private Integer progress = 0;
 	
 	@PostConstruct
 	public void init() {
@@ -76,24 +76,25 @@ public class PvBean implements Serializable {
 	
 	public void ladeChart() {
 		
-		progressChart = 0;
+		setProgress(0);	
+		
 		battLadungTag = pvService.ladeBattLadungTag(datum);
-		progressChart = progressChart + 15;
+		setProgress(progress + 15);
 		
 		tagesVerbrauchBatt = pvService.ladeVerbrauchTagTyp(datum, 1);
-		progressChart = progressChart + 17;
+		setProgress(progress + 17);
 		
 		tagesVerbrauchPv = pvService.ladeVerbrauchTagTyp(datum, 2);
-		progressChart = progressChart + 17;
+		setProgress(progress + 17);
 		
 		tagesVerbrauchNetz = pvService.ladeVerbrauchTagTyp(datum, 3);
-		progressChart = progressChart + 17;
+		setProgress(progress + 17);
 		
 		hausverbrauchGesamt = pvService.ladeVerbrauchTagTyp(datum, 8);
-		progressChart = progressChart + 17;
+		setProgress(progress + 17);
 		
 		pvLeistung = pvService.ladeVerbrauchTagTyp(datum, 6);
-		progressChart = progressChart + 17;
+		setProgress(progress + 17);
 		
 		
 		LineChartSeries battLadungChartSerie = new LineChartSeries();
@@ -252,8 +253,13 @@ public class PvBean implements Serializable {
 		this.datum = datum;
 	}
 
-	public int getProgressChart() {
-		return progressChart;
+	
+	public void setProgress(Integer progress) {
+		this.progress = progress;
+	}
+
+	public Integer getProgress() {
+		return progress;
 	}
 	
 	

@@ -16,7 +16,8 @@
 	<p:commandButton action="#{pvBean.datumPlus}" update="pvChart, datum"	title="Tag vor" icon="fa fa-chevron-right" />
 
 	<p:commandButton action="#{pvBean.ladeChart}" update="pvChart" icon="fa fa-refresh" />	
-	<p:progressBar id="pvChartProgress" ajax="true"	value="#{pvBean.progressChart}" global="false" styleClass="animated" />
+	
+	<p:progressBar ajax="true" interval="500"	value="#{pvBean.progress}" labelTemplate="{value}%" styleClass="animated" global="false" />
 	
 	<p:chart id="pvChart" type="line" model="#{pvBean.pvChart}"></p:chart>
 
