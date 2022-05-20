@@ -21,6 +21,7 @@ import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.LinearAxis;
 
+import de.erdtmann.soft.haussteuerung.core.CoreService;
 import de.erdtmann.soft.haussteuerung.pv.PvService;
 import de.erdtmann.soft.haussteuerung.pv.entities.BattLadungE;
 import de.erdtmann.soft.haussteuerung.pv.entities.LeistungE;
@@ -39,7 +40,7 @@ public class PvBean implements Serializable {
 	Logger log = Logger.getLogger(PvBean.class);
 	
 	@Inject
-	PvService pvService;
+	CoreService coreService;
 	
 	private BatterieDaten batt;
 	private PvDaten pv;
@@ -68,32 +69,37 @@ public class PvBean implements Serializable {
 	}
 
 	public void ladePvDaten() {
-		batt = pvService.ladeBatterie();
-		pv = pvService.ladePv();
-		netz = pvService.ladeNetz();
-		verbrauch = pvService.ladeVerbrauch();
+		try {
+			batt = coreService.ladeBatterie();
+			pv = coreService.ladePv();
+			netz = coreService.ladeNetz();
+			verbrauch = coreService.ladeVerbrauch();
+		} catch (Exception e) {
+			log.error("Fehler beim Laden der PV Daten");
+			log.error(e.getMessage());
+		}
 	}
 	
 	public void ladeChart() {
 		
 		setProgress(0);	
 		
-		battLadungTag = pvService.ladeBattLadungTag(datum);
+		battLadungTag = coreService.ladeBattLadungTag(datum);
 		setProgress(progress + 15);
 		
-		tagesVerbrauchBatt = pvService.ladeVerbrauchTagTyp(datum, 1);
+		tagesVerbrauchBatt = coreService.ladeVerbrauchTagTyp(datum, 1);
 		setProgress(progress + 17);
 		
-		tagesVerbrauchPv = pvService.ladeVerbrauchTagTyp(datum, 2);
+		tagesVerbrauchPv = coreService.ladeVerbrauchTagTyp(datum, 2);
 		setProgress(progress + 17);
 		
-		tagesVerbrauchNetz = pvService.ladeVerbrauchTagTyp(datum, 3);
+		tagesVerbrauchNetz = coreService.ladeVerbrauchTagTyp(datum, 3);
 		setProgress(progress + 17);
 		
-		hausverbrauchGesamt = pvService.ladeVerbrauchTagTyp(datum, 8);
+		hausverbrauchGesamt = coreService.ladeVerbrauchTagTyp(datum, 8);
 		setProgress(progress + 17);
 		
-		pvLeistung = pvService.ladeVerbrauchTagTyp(datum, 6);
+		pvLeistung = coreService.ladeVerbrauchTagTyp(datum, 6);
 		setProgress(progress + 17);
 		
 		
@@ -261,7 +267,4 @@ public class PvBean implements Serializable {
 	public Integer getProgress() {
 		return progress;
 	}
-	
-	
-	
 }

@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
 
+import de.erdtmann.soft.haussteuerung.pv.exceptions.PvException;
 import de.erdtmann.soft.haussteuerung.pv.utils.ModbusRegister;
 import de.erdtmann.soft.haussteuerung.pv.utils.PvConstants;
 import de.re.easymodbus.exceptions.ModbusException;
@@ -33,7 +34,7 @@ public class PvModbusClient {
 		return modbus.ReadHoldingRegisters(register.getAddr(), register.getAnzahl());
 	}
 
-	public String holeModbusRegisterString(ModbusRegister register) {
+	public String holeModbusRegisterString(ModbusRegister register) throws PvException {
 
 		String wert = null;
 
@@ -46,25 +47,20 @@ public class PvModbusClient {
 
 			wert = ModbusClient.ConvertRegistersToString(holeHoldingRegister(register), 0, register.getAnzahl());
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ModbusException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			throw new PvException("Fehler beim Abruf des Modbus String: " + e.getMessage());
 		} finally {
 			try {
 				modbus.Disconnect();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new PvException("Fehler beim Schlieﬂen der Modbus-Verbindung: " + e.getMessage());
 			}
 		}
 
 		return wert;
 	}
 
-	public Float holeModbusRegisterFloat(ModbusRegister register) {
+	public Float holeModbusRegisterFloat(ModbusRegister register) throws PvException {
 		Float wert = null;
 		
 		try {
@@ -74,8 +70,13 @@ public class PvModbusClient {
 			wert = ModbusClient.ConvertRegistersToFloat(holeHoldingRegister(register));
 
 		} catch (Exception e) {
-			log.error("Fehler beim Abruf des Modbus Float");
-			log.error(e.getMessage());
+			throw new PvException("Fehler beim Abruf des Modbus Float: " + e.getMessage());
+		} finally {
+			try {
+				modbus.Disconnect();
+			} catch (Exception e) {
+				throw new PvException("Fehler beim Schlieﬂen der Modbus-Verbindung: " + e.getMessage());
+			}
 		}
 
 		return wert;

@@ -1,5 +1,6 @@
 package de.erdtmann.soft.haussteuerung.core;
 
+import java.time.LocalDate;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,13 @@ import de.erdtmann.soft.haussteuerung.pool.exceptions.PumpenException;
 import de.erdtmann.soft.haussteuerung.pool.utils.Heizung;
 import de.erdtmann.soft.haussteuerung.pool.utils.Pumpe;
 import de.erdtmann.soft.haussteuerung.pv.PvService;
+import de.erdtmann.soft.haussteuerung.pv.entities.BattLadungE;
+import de.erdtmann.soft.haussteuerung.pv.entities.LeistungE;
+import de.erdtmann.soft.haussteuerung.pv.exceptions.PvException;
+import de.erdtmann.soft.haussteuerung.pv.model.BatterieDaten;
+import de.erdtmann.soft.haussteuerung.pv.model.NetzDaten;
+import de.erdtmann.soft.haussteuerung.pv.model.PvDaten;
+import de.erdtmann.soft.haussteuerung.pv.model.Verbrauch;
 
 
 @RequestScoped
@@ -68,11 +76,11 @@ public class CoreService {
 				boolean isPumpeAn = pumpenService.holePumpenSatus();
 				boolean isHeizungAn = heizungService.holeHeizungSatus();
 				
-				boolean isPvMin = pvService.isPvLeistungUeberMin();
-				boolean isPvMax = pvService.isPvLeistungUeberMax();
+				boolean isPvMin = isPvUeberMin();
+				boolean isPvMax = isPvUeberMax();
 				
-				boolean isBattMin = pvService.isBattLadungUeberMin();
-				boolean isBattMax = pvService.isBattLadungUeberMax();
+				boolean isBattMin = isBattUeberMin();
+				boolean isBattMax = isBattUeberMax();
 				
 				boolean schaltePumpeAn = false;
 				boolean schalteHeizungAn = false;
@@ -162,20 +170,66 @@ public class CoreService {
 		return heizungService.schalteHeizung(status);
 	}
 
-	public boolean isPvMin() {
-		return pvService.isPvLeistungUeberMin();
+	public boolean isPvUeberMin() throws PvException {
+		PvDaten pv = pvService.ladePv();
+		
+		int pvGesamt = (int) pv.getGesamtLeistung();
+		
+		return pvGesamt > Integer.parseInt(konfiguration.get(KonfigNames.POOL_PV_MIN).getWert());
 	}
 
-	public boolean isPvMax() {
-		return pvService.isPvLeistungUeberMax();
+	public boolean isPvUeberMax() throws PvException {
+		PvDaten pv = pvService.ladePv();
+		
+		int pvGesamt = (int)pv.getGesamtLeistung(); 
+		
+		return pvGesamt > Integer.parseInt(konfiguration.get(KonfigNames.POOL_PV_MAX).getWert());
+
 	}
 
-	public boolean isBattMin() {
-		return pvService.isBattLadungUeberMin();
+	public boolean isBattUeberMin() throws PvException {
+		BatterieDaten batt = pvService.ladeBatterie();
+		
+		int battLadeStand = (int)batt.getLadeStand();
+		
+		return battLadeStand >  Integer.parseInt(konfiguration.get(KonfigNames.POOL_BATT_MIN).getWert());
 	}
 
-	public boolean isBattMax() {
-		return pvService.isBattLadungUeberMax();
+	public boolean isBattUeberMax() throws PvException {
+		BatterieDaten batt = pvService.ladeBatterie();
+		
+		int battLadeStand = (int)batt.getLadeStand();
+		
+		return battLadeStand >  Integer.parseInt(konfiguration.get(KonfigNames.POOL_BATT_MAX).getWert());
+	}
+
+	public BatterieDaten ladeBatterie() throws PvException {
+		return pvService.ladeBatterie();
+	}
+
+	public PvDaten ladePv() throws PvException {
+		return pvService.ladePv();
+	}
+
+	public NetzDaten ladeNetz() throws PvException {
+		return pvService.ladeNetz();
+	}
+
+	public Verbrauch ladeVerbrauch() throws PvException {
+		return pvService.ladeVerbrauch();
+	}
+
+	public List<BattLadungE> ladeBattLadungTag(LocalDate datum) {
+		return pvService.ladeBattLadungTag(datum);
+	}
+
+	public List<LeistungE> ladeVerbrauchTagTyp(LocalDate datum, int i) {
+		return pvService.ladeVerbrauchTagTyp(datum, i);
+	}
+
+	public void speichereDaten() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

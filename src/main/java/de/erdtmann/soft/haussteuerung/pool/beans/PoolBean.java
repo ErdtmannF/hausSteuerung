@@ -1,8 +1,8 @@
 package de.erdtmann.soft.haussteuerung.pool.beans;
 
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -11,12 +11,11 @@ import javax.inject.Named;
 import org.jboss.logging.Logger;
 
 import de.erdtmann.soft.haussteuerung.core.CoreService;
-import de.erdtmann.soft.haussteuerung.pool.HeizungService;
-import de.erdtmann.soft.haussteuerung.pool.PumpenService;
 import de.erdtmann.soft.haussteuerung.pool.exceptions.HeizungException;
 import de.erdtmann.soft.haussteuerung.pool.exceptions.PumpenException;
 import de.erdtmann.soft.haussteuerung.pool.utils.Heizung;
 import de.erdtmann.soft.haussteuerung.pool.utils.Pumpe;
+import de.erdtmann.soft.haussteuerung.pv.exceptions.PvException;
 
 import java.io.Serializable;
 
@@ -162,19 +161,43 @@ public class PoolBean implements Serializable {
 	}
 
 	public boolean isPvMin() {
-		return coreService.isPvMin();
+		try {
+			return coreService.isPvUeberMin();
+		} catch (PvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public boolean isPvMax() {
-		return coreService.isPvMax();
+		try {
+			return coreService.isPvUeberMax();
+		} catch (PvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public boolean isBattMin() {
-		return coreService.isBattMin();
+		try {
+			return coreService.isBattUeberMin();
+		} catch (PvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	public boolean isBattMax() {
-		return coreService.isBattMax();
+		try {
+			return coreService.isBattUeberMax();
+		} catch (PvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	

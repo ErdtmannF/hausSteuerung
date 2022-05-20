@@ -12,6 +12,7 @@ import org.jboss.logging.Logger;
 import de.erdtmann.soft.haussteuerung.core.CoreService;
 import de.erdtmann.soft.haussteuerung.pv.entities.BattLadungE;
 import de.erdtmann.soft.haussteuerung.pv.entities.LeistungE;
+import de.erdtmann.soft.haussteuerung.pv.exceptions.PvException;
 import de.erdtmann.soft.haussteuerung.pv.model.BatterieDaten;
 import de.erdtmann.soft.haussteuerung.pv.model.NetzDaten;
 import de.erdtmann.soft.haussteuerung.pv.model.Phase;
@@ -32,21 +33,18 @@ public class PvService {
 
 	@Inject
 	PvRepository pvRepo;
-	
-	@Inject
-	CoreService coreService;
 
-	public void speichereDaten() {
+	public void speichereDaten() throws PvException {
 				
 		if (pvModbusClient != null) {
 			LocalDateTime zeit = LocalDateTime.now();
-			
-			float verbrauchVonBatt = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.VERBRAUCH_FROM_BAT);
+
+			float verbrauchVonBatt = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.VERBRAUCH_FROM_BAT); 
 			float verbrauchVonPv = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.VERBRAUCH_FROM_PV);
-			float verbrauchVonNetz = pvModbusClient.holeModbusRegisterFloat(NetzFloatRegister.VERBRAUCH_FROM_GRID);
+			float verbrauchVonNetz = pvModbusClient.holeModbusRegisterFloat(NetzFloatRegister.VERBRAUCH_FROM_GRID); 
 			float pvString1 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_1);
 			float pvString2 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_2);
-			
+			float battLadeStand = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_STAND);
 			
 			LeistungE verbrauchBatt = LeistungE.builder()
 												.withTyp(1)
@@ -107,7 +105,7 @@ public class PvService {
 			pvRepo.speichereLeistung(hausverbrauchGesamt);
 			
 			BattLadungE battLadung = BattLadungE.builder()
-												.withWert(pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_STAND))
+												.withWert(battLadeStand)
 												.withZeit(zeit)
 												.build();
 			
@@ -126,133 +124,105 @@ public class PvService {
 	}
 
 	
-	public BatterieDaten ladeBatterie() {
+	public BatterieDaten ladeBatterie() throws PvException {
 
-		if (pvModbusClient != null) {	
-			return BatterieDaten.builder()
-								.withLadeStrom(pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_STROM))
-								.withSpannung(pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_SPANNUNG))
-								.withLadeZyklen(pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_ZYKLUS))
-								.withLadeStand(pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_STAND))
-								.withTemperatur(pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_TEMP))
-								.build();
-		} else	{
-			return BatterieDaten.builder()
-								.withLadeStrom(999)
-								.withSpannung(999)
-								.withLadeZyklen(999)
-								.withLadeStand(999)
-								.withTemperatur(999)
-								.build();
+		float battStrom = 999;
+		float battSpannung = 999;
+		float battZyklus = 999;
+		float battStand = 999;
+		float battTemp = 999;
+		
+		if (pvModbusClient != null) {
+			battStrom = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_STROM);
+			battSpannung = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_SPANNUNG);
+			battZyklus = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_ZYKLUS);
+			battStand = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_STAND);
+			battTemp = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_TEMP);
 		}
+
+		return BatterieDaten.builder()
+							.withLadeStrom(battStrom)
+							.withSpannung(battSpannung)
+							.withLadeZyklen(battZyklus)
+							.withLadeStand(battStand)
+							.withTemperatur(battTemp)
+							.build();
 	}
 
-	public NetzDaten ladeNetz() {
+	public NetzDaten ladeNetz() throws PvException {
 
+		float gridLeistung = 999;
+		
+		if (pvModbusClient != null) {
+			gridLeistung = pvModbusClient.holeModbusRegisterFloat(NetzFloatRegister.GRID_LEISTUNG);
+		}
+		return NetzDaten.builder()
+				.withLeistung(gridLeistung)
+				.build();
+
+	}
+
+	public PvDaten ladePv() throws PvException {
+
+		float dcA1 = 999;
+		float dcV1 = 999;
+		float dcW1 = 999;
+
+		float dcA2 = 999;
+		float dcV2 = 999;
+		float dcW2 = 999;
+
+		float gesamtLeistung = 999;
+		
 		if (pvModbusClient != null) {
 
-			return NetzDaten.builder()
-								.withLeistung(pvModbusClient.holeModbusRegisterFloat(NetzFloatRegister.GRID_LEISTUNG))
+			dcA1 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_A_1);
+			dcV1 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_V_1);
+			dcW1 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_1);
+			dcA2 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_A_2);
+			dcV2 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_V_2);
+			dcW2 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_2);
+			
+			gesamtLeistung = dcW1 + dcW2;
+		}
+
+		Phase dcString1 = Phase.builder()
+								.withStrom(dcA1)
+								.withSpannung(dcV1)
+								.withLeistung(dcW1)
+								.build();	
+
+		Phase dcString2 = Phase.builder()
+								.withStrom(dcA2)
+								.withSpannung(dcV2)
+								.withLeistung(dcW2)
 								.build();
-		} else {
-				return NetzDaten.builder()
-								.withLeistung(999)
-								.build();
-		}
+		
+		return PvDaten.builder()
+						.withGesamtLeistung(gesamtLeistung)
+						.withDcString1(dcString1)
+						.withDcString2(dcString2)
+						.build();
 	}
 
-	public PvDaten ladePv() {
-
+	
+	public Verbrauch ladeVerbrauch() throws PvException {
+		
+		float verbrauchBatt = 999;
+		float verbrauchPv = 999;
+		float verbrauchGrid = 999;
+		
 		if (pvModbusClient != null) {
-
-			Phase dcString1 = Phase.builder()
-									.withStrom(pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_A_1))
-									.withSpannung(pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_V_1))
-									.withLeistung(pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_1))
-									.build();
-	
-			Phase dcString2 = Phase.builder()
-									.withStrom(pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_A_2))
-									.withSpannung(pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_V_2))
-									.withLeistung(pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_2))
-									.build();
-			
-			float gesamtLeistung = dcString1.getLeistung() + dcString2.getLeistung();
-	
-			return PvDaten.builder()
-							.withGesamtLeistung(gesamtLeistung)
-							.withDcString1(dcString1)
-							.withDcString2(dcString2)
-							.build();
-			
-		} else {
-			Phase dcString1 = Phase.builder()
-							.withStrom(999)
-							.withSpannung(999)
-							.withLeistung(999)
-							.build();
-
-			Phase dcString2 = Phase.builder()
-							.withStrom(999)
-							.withSpannung(999)
-							.withLeistung(999)
-							.build();
-
-			
-			return PvDaten.builder()
-							.withGesamtLeistung(999)
-							.withDcString1(dcString1)
-							.withDcString2(dcString2)
-							.build();
+			verbrauchBatt = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.VERBRAUCH_FROM_BAT);
+			verbrauchPv = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.VERBRAUCH_FROM_PV);
+			verbrauchGrid = pvModbusClient.holeModbusRegisterFloat(NetzFloatRegister.VERBRAUCH_FROM_GRID);
 		}
-	}
-
-	public Verbrauch ladeVerbrauch() {
-		if (pvModbusClient != null) {
-			return Verbrauch.builder()
-					.withVonBatt(pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.VERBRAUCH_FROM_BAT))
-					.withVonPv(pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.VERBRAUCH_FROM_PV))
-					.withVonNetz(pvModbusClient.holeModbusRegisterFloat(NetzFloatRegister.VERBRAUCH_FROM_GRID))
-					.build();
-		} else {
-			return Verbrauch.builder()
-					.withVonBatt(999)
-					.withVonPv(999)
-					.withVonNetz(999)
-					.build();
-		}
-	}
-	
-	public boolean isPvLeistungUeberMin() {
-		float pvString1 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_1);
-		float pvString2 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_2);
-		int pvGesamt = (int) (pvString1 + pvString2);
-		int minPv = coreService.holeMinPv();
 		
-		return pvGesamt > minPv;
-	}
-	
-	public boolean isPvLeistungUeberMax() {
-		float pvString1 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_1);
-		float pvString2 = pvModbusClient.holeModbusRegisterFloat(PvFloatRegister.DC_W_2);
-		int pvGesamt = (int) (pvString1 + pvString2);
-		int maxPv = coreService.holeMaxPv();
-		
-		return pvGesamt > maxPv;
-	}
-	
-	public boolean isBattLadungUeberMin() {
-		float battLadung = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_STAND);
-		int minBatt = coreService.holeMinBatt();
-		
-		return battLadung >  minBatt;
-	}
-
-	public boolean isBattLadungUeberMax() {
-		float battLadung = pvModbusClient.holeModbusRegisterFloat(BatterieFloatRegister.BATT_STAND);
-		int maxBatt = coreService.holeMaxBatt();
-		
-		return battLadung >  maxBatt;
+		return Verbrauch.builder()
+						.withVonBatt(verbrauchBatt)
+						.withVonPv(verbrauchPv)
+						.withVonNetz(verbrauchGrid)
+						.build();
 	}
 
 }

@@ -23,7 +23,6 @@ public class PvRepository {
 	@PersistenceContext
 	EntityManager em;
 
-
 	public void speichereLeistung(LeistungE leistung) {
 		em.persist(leistung);	
 	}

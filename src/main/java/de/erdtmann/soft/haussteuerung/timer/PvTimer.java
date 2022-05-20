@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 
-import de.erdtmann.soft.haussteuerung.pv.PvService;
+import de.erdtmann.soft.haussteuerung.core.CoreService;
 
 @Singleton
 public class PvTimer {
@@ -14,12 +14,11 @@ public class PvTimer {
 	Logger log = Logger.getLogger(PvTimer.class);
 	
 	@Inject
-	PvService pvService;
+	CoreService coreService;
 	
 	@Schedule(second = "0", minute = "*/1", hour = "*", persistent = false)
 	public void jedeMinute() {
-			pvService.speichereDaten();
-			
+			coreService.speichereDaten();
 	}
 
 //	@Schedule(second = "0", minute = "*/5", hour = "*", persistent = false)
