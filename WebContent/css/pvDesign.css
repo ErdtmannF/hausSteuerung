@@ -42,3 +42,7 @@ body {
 .noBorder {
 	border-style: none !important;
 }
+
+.pi-2x {
+	font-size: 2rem !important;
+}

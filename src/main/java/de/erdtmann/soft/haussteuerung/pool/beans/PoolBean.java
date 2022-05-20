@@ -8,9 +8,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.jboss.logging.Logger;
+
 import de.erdtmann.soft.haussteuerung.core.CoreService;
 import de.erdtmann.soft.haussteuerung.pool.HeizungService;
 import de.erdtmann.soft.haussteuerung.pool.PumpenService;
+import de.erdtmann.soft.haussteuerung.pool.exceptions.HeizungException;
 import de.erdtmann.soft.haussteuerung.pool.exceptions.PumpenException;
 import de.erdtmann.soft.haussteuerung.pool.utils.Heizung;
 import de.erdtmann.soft.haussteuerung.pool.utils.Pumpe;
@@ -22,13 +25,8 @@ import java.io.Serializable;
 public class PoolBean implements Serializable {
 
 	private static final long serialVersionUID = -6089267772903098666L;
-
-	@Inject
-	PumpenService pumpenService;
-
-	@Inject
-	HeizungService heizungService;
-
+	Logger log = Logger.getLogger(PoolBean.class);
+	
 	@Inject
 	CoreService coreService;
 	
@@ -46,21 +44,23 @@ public class PoolBean implements Serializable {
 	}
 
 	public void aktualisiere() {
+		
+		log.info("PoolBean wird aktualisiert");
+		
 		try {
 			winter = coreService.isPoolWinterEin();
 			automatik = coreService.isPoolAutomatikEin();
 			
 			if (!winter) {
-				pumpeAn = pumpenService.holePumpenSatus();
-				heizungAn = heizungService.holeHeizungSatus();
+				pumpeAn = coreService.holePumpenSatus();
+				heizungAn = coreService.holeHeizungSatus();
 			}
 			
 			setPumpenIcon();
 			setHeizungIcon();
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 
@@ -88,12 +88,13 @@ public class PoolBean implements Serializable {
 	}
 
 	public void pumpeEin() {
+		log.info("Pumpe ein Button gedrueckt");
 		int status = 0;
 		try {
-			status = pumpenService.schaltePumpe(Pumpe.AN);
+			status = coreService.schaltePumpe(Pumpe.AN);
 		} catch (PumpenException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Fehler beim einschalten der Pumpe");
+			log.error(e.getMessage());
 		}
 
 		if (status == 200) {
@@ -105,13 +106,13 @@ public class PoolBean implements Serializable {
 	}
 
 	public void pumpeAus() {
+		log.info("Pumpe aus Button gedrueckt");
 		int status = 0;
 		try {
-			status = pumpenService.schaltePumpe(Pumpe.AUS);
+			status = coreService.schaltePumpe(Pumpe.AUS);
 		} catch (PumpenException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			log.error("Fehler beim ausschalten der Pumpe");
+			log.error(e.getMessage());		}
 		
 		if (status == 200) {
 			addMessage("Pumpe ausgeschaltet!");
@@ -122,10 +123,15 @@ public class PoolBean implements Serializable {
 	}
 
 	public void heizungEin() {
+		log.info("Heizung ein Button gedrueckt");
 		int status = 0;
 		
-		status = heizungService.schalteHeizung(Heizung.AN);
-		
+		try {
+			status = coreService.schalteHeizung(Heizung.AN);
+		} catch (HeizungException e) {
+			log.error("Fehler beim einschalten der Heizung");		
+			log.error(e.getMessage());
+		}		
 
 		if (status == 200) {
 			addMessage("Heizung eingeschaltet!");
@@ -136,9 +142,15 @@ public class PoolBean implements Serializable {
 	}
 
 	public void heizungAus() {
+		log.info("Heizung aus Button gedrueckt");
 		int status = 0;
 		
-		status = heizungService.schalteHeizung(Heizung.AUS);
+		try {
+			status = coreService.schalteHeizung(Heizung.AUS);
+		} catch (HeizungException e) {
+			log.error("Fehler beim ausschalten der Heizung");
+			log.error(e.getMessage());
+		}
 		
 		
 		if (status == 200) {
@@ -147,6 +159,22 @@ public class PoolBean implements Serializable {
 		} else {
 			addErrMessage("Fehler beim Ausschalten der Heizung!");
 		}
+	}
+
+	public boolean isPvMin() {
+		return coreService.isPvMin();
+	}
+
+	public boolean isPvMax() {
+		return coreService.isPvMax();
+	}
+
+	public boolean isBattMin() {
+		return coreService.isBattMin();
+	}
+
+	public boolean isBattMax() {
+		return coreService.isBattMax();
 	}
 
 	
@@ -181,11 +209,11 @@ public class PoolBean implements Serializable {
 	}
 
 	public boolean isheizungAnBottonDisabled() {
-		return heizungAn || automatik || winter;
+		return pumpeAn || heizungAn || automatik || winter;
 	}
 
 	public boolean isheizungAusBottonDisabled() {
-		return !heizungAn || automatik || winter;
+		return pumpeAn || !heizungAn || automatik || winter;
 	}
 
 	public String getPumpenIcon() {

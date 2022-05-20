@@ -4,6 +4,8 @@ package de.erdtmann.soft.haussteuerung.pool;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
+
 import de.erdtmann.soft.haussteuerung.pool.exceptions.PumpenException;
 import de.erdtmann.soft.haussteuerung.pool.utils.Pumpe;
 
@@ -11,6 +13,8 @@ import de.erdtmann.soft.haussteuerung.pool.utils.Pumpe;
 @ApplicationScoped
 public class PumpenService {
 
+	Logger log = Logger.getLogger(PumpenService.class);
+	
 //	@Inject
 //	PumpenRepository pumpenRepo;
 	
@@ -24,7 +28,10 @@ public class PumpenService {
 	}
 
 	public int schaltePumpe(Pumpe pumpe) throws PumpenException {
+		log.info("Pumpe: " + pumpe.name());
+		
 		int status = restClient.schaltePumpe(pumpe);
+		
 			if (status == 200) {
 				if (pumpe.equals(Pumpe.AN)) {
 					startePumpenLauf();

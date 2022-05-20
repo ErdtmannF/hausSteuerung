@@ -8,16 +8,36 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
+
 import de.erdtmann.soft.haussteuerung.core.entities.KonfigurationE;
 import de.erdtmann.soft.haussteuerung.core.utils.KonfigNames;
+import de.erdtmann.soft.haussteuerung.pool.HeizungService;
+import de.erdtmann.soft.haussteuerung.pool.PumpenService;
+import de.erdtmann.soft.haussteuerung.pool.exceptions.HeizungException;
+import de.erdtmann.soft.haussteuerung.pool.exceptions.PumpenException;
+import de.erdtmann.soft.haussteuerung.pool.utils.Heizung;
+import de.erdtmann.soft.haussteuerung.pool.utils.Pumpe;
+import de.erdtmann.soft.haussteuerung.pv.PvService;
 
 
 @RequestScoped
 public class CoreService {
 
+	Logger log = Logger.getLogger(CoreService.class);
+	
 	@Inject
 	CoreRepository coreRepo;
 
+	@Inject
+	PumpenService pumpenService;
+	
+	@Inject
+	HeizungService heizungService;
+	
+	@Inject
+	PvService pvService;
+	
 	private Map<KonfigNames, KonfigurationE> konfiguration;
 	
 	private static final String FLAG_TRUE = "1";
@@ -39,6 +59,40 @@ public class CoreService {
 					konfiguration.put(konfEnum, konfigE);
 				}
 			}
+		}
+	}
+	
+	public void poolSteuerung() {
+		if (isPoolAutomatikEin()) {
+			try {
+				boolean isPumpeAn = pumpenService.holePumpenSatus();
+				boolean isHeizungAn = heizungService.holeHeizungSatus();
+				
+				boolean isPvMin = pvService.isPvLeistungUeberMin();
+				boolean isPvMax = pvService.isPvLeistungUeberMax();
+				
+				boolean isBattMin = pvService.isBattLadungUeberMin();
+				boolean isBattMax = pvService.isBattLadungUeberMax();
+				
+				boolean schaltePumpeAn = false;
+				boolean schalteHeizungAn = false;
+				
+				if (isPvMin && isBattMax) {
+					schaltePumpeAn = true;
+					if (isPvMax) {
+						schalteHeizungAn = true;
+					}
+				} else {
+					
+				}
+				
+				
+				
+			} catch (Exception e) {
+				log.error("Fehler in der PoolSteuerung");
+				log.error(e.getMessage());
+			}
+			
 		}
 	}
 	
@@ -84,12 +138,44 @@ public class CoreService {
 
 	
 	private void saveKonfigWert(String wert, KonfigNames konfig) {
-		
+				
 		KonfigurationE konfigE = konfiguration.get(konfig);
 		
 		konfigE.setWert(wert);
 		
 		coreRepo.saveKonfigurationsItem(konfigE);
+	}
+
+	public boolean holePumpenSatus() throws PumpenException {
+		return pumpenService.holePumpenSatus();
+	}
+
+	public boolean holeHeizungSatus() throws HeizungException {
+		return heizungService.holeHeizungSatus();
+	}
+
+	public int schaltePumpe(Pumpe zustand) throws PumpenException {
+		return pumpenService.schaltePumpe(zustand);
+	}
+
+	public int schalteHeizung(Heizung status) throws HeizungException {	
+		return heizungService.schalteHeizung(status);
+	}
+
+	public boolean isPvMin() {
+		return pvService.isPvLeistungUeberMin();
+	}
+
+	public boolean isPvMax() {
+		return pvService.isPvLeistungUeberMax();
+	}
+
+	public boolean isBattMin() {
+		return pvService.isBattLadungUeberMin();
+	}
+
+	public boolean isBattMax() {
+		return pvService.isBattLadungUeberMax();
 	}
 
 }

@@ -22,8 +22,9 @@ public class LichtBean implements Serializable {
 	LichtService lichtService;
 	
 	private String mainColor;
-	private int helligkeit;
-	private int geschwindigkeit;
+	private int helligkeit = 255;
+	private int v1 = 50;
+	private int v2 = 50;
 	private String modus = "alleAus";
 	
 	@PostConstruct
@@ -42,6 +43,21 @@ public class LichtBean implements Serializable {
 		lichtService.alleLedAus();
 	}
 	
+	public void farbe(String farbe) {
+		lichtService.farbe(farbe);
+	}
+	
+	public void aendereHelligkeit() {
+		lichtService.helligkeit(helligkeit);
+	}
+	
+	public void aendereV1() {
+		lichtService.v1(v1);
+	}
+	
+	public void aendereV2() {
+		lichtService.v2(v2);
+	}
 	
 	public String getMainColor() {
 		return mainColor;
@@ -57,11 +73,18 @@ public class LichtBean implements Serializable {
 		this.helligkeit = helligkeit;
 	}
 
-	public int getGeschwindigkeit() {
-		return geschwindigkeit;
+	public int getV1() {
+		return v1;
 	}
-	public void setGeschwindigkeit(int geschwindigkeit) {
-		this.geschwindigkeit = geschwindigkeit;
+	public void setV1(int v1) {
+		this.v1 = v1;
+	}
+
+	public int getV2() {
+		return v2;
+	}
+	public void setV2(int v2) {
+		this.v2 = v2;
 	}
 
 	public String getModus() {

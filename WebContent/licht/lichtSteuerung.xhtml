@@ -1,11 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="de" 
-	xmlns="http://www.w3.org/1999/xhtml"
+<html lang="de" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
 
 <p:outputPanel id="licht" style="border-style:none">
 
@@ -20,9 +18,74 @@
 					styleClass="ui-priority-primary" />
 
 			</p:column>
+			<p:column>
+				<p:inputText id="sliderHelligkeit" size="2"
+					value="#{lichtBean.helligkeit}" />
+			</p:column>
+			<p:column>
+				<p:inputText id="sliderV1" size="2" value="#{lichtBean.v1}" />
+			</p:column>
+			<p:column>
+				<p:inputText id="sliderV2" size="2" value="#{lichtBean.v2}" />
+			</p:column>
+		</p:row>
+		<p:row>
+			<p:column>
+				<p:commandButton value="" id="btWeiss"
+					action="#{lichtBean.farbe('WEISS')}"
+					style="height:30px; width: 100px; background: white;"
+					styleClass="ui-priority-primary" />
+				<p:commandButton value="" id="btGelb"
+					action="#{lichtBean.farbe('GELB')}"
+					style="height:30px; width: 100px; background: yellow"
+					styleClass="ui-priority-primaryd" />
+				<br />
+				<p:commandButton value="" id="btOrange"
+					action="#{lichtBean.farbe('ORANGE')}"
+					style="height:30px; width: 100px; background: orange;"
+					styleClass="ui-priority-primary" />
+				<p:commandButton value="" id="btRot"
+					action="#{lichtBean.farbe('ROT')}"
+					style="height:30px; width: 100px; background: red"
+					styleClass="ui-priority-primaryd" />
+				<br />
+				<p:commandButton value="" id="btMagenta"
+					action="#{lichtBean.farbe('MAGENTA')}"
+					style="height:30px; width: 100px; background: magenta;"
+					styleClass="ui-priority-primary" />
+				<p:commandButton value="" id="btCyan"
+					action="#{lichtBean.farbe('CYAN')}"
+					style="height:30px; width: 100px; background: cyan"
+					styleClass="ui-priority-primaryd" />
+				<br />
+				<p:commandButton value="" id="btBlau"
+					action="#{lichtBean.farbe('BLAU')}"
+					style="height:30px; width: 100px; background: blue;"
+					styleClass="ui-priority-primary" />
+				<p:commandButton value="" id="btGruen"
+					action="#{lichtBean.farbe('GRUEN')}"
+					style="height:30px; width: 100px; background: green"
+					styleClass="ui-priority-primaryd" />
+			</p:column>
+			<p:column>
+				<p:slider for="sliderHelligkeit" type="vertical" minValue="0"
+					maxValue="255" style="margin-left:30px;">
+					<p:ajax event="slideEnd" listener="#{lichtBean.aendereHelligkeit}" />
+				</p:slider>
+			</p:column>
+			<p:column>
+				<p:slider for="sliderV1" type="vertical" minValue="1"
+					maxValue="1000" style="margin-left:30px;">
+					<p:ajax event="slideEnd" listener="#{lichtBean.aendereV1}" />
+				</p:slider>
+			</p:column>
+			<p:column>
+				<p:slider for="sliderV2" type="vertical" minValue="1"
+					maxValue="1000" style="margin-left:30px;">
+					<p:ajax event="slideEnd" listener="#{lichtBean.aendereV2}" />
+				</p:slider>
+			</p:column>
 		</p:row>
 	</p:panelGrid>
-
-
 </p:outputPanel>
 </html>
