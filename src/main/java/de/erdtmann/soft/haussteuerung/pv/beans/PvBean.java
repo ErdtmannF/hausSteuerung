@@ -22,7 +22,6 @@ import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.LinearAxis;
 
 import de.erdtmann.soft.haussteuerung.core.CoreService;
-import de.erdtmann.soft.haussteuerung.pv.PvService;
 import de.erdtmann.soft.haussteuerung.pv.entities.BattLadungE;
 import de.erdtmann.soft.haussteuerung.pv.entities.LeistungE;
 import de.erdtmann.soft.haussteuerung.pv.model.BatterieDaten;

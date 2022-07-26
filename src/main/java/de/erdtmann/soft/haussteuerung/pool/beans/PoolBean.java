@@ -160,42 +160,42 @@ public class PoolBean implements Serializable {
 		}
 	}
 
-	public boolean isPvMin() {
+	public boolean isPvUeberMin() {
 		try {
 			return coreService.isPvUeberMin();
 		} catch (PvException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Fehler bei der PV Min Prüfung");
+			log.error(e.getMessage());
 		}
 		return false;
 	}
 
-	public boolean isPvMax() {
+	public boolean isPvUeberMax() {
 		try {
 			return coreService.isPvUeberMax();
 		} catch (PvException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Fehler bei der PV Max Prüfung");
+			log.error(e.getMessage());
 		}
 		return false;
 	}
 
-	public boolean isBattMin() {
+	public boolean isBattUeberMin() {
 		try {
 			return coreService.isBattUeberMin();
 		} catch (PvException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Fehler bei der Batt Min Prüfung");
+			log.error(e.getMessage());
 		}
 		return false;
 	}
 
-	public boolean isBattMax() {
+	public boolean isBattUeberMax() {
 		try {
 			return coreService.isBattUeberMax();
 		} catch (PvException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Fehler bei der Batt Max Prüfung");
+			log.error(e.getMessage());
 		}
 		return false;
 	}
