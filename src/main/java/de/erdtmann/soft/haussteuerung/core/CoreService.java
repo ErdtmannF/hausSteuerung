@@ -90,10 +90,11 @@ public class CoreService {
 					if (isPvMax) {
 						schalteHeizungAn = true;
 					}
-				} else {
+				} 
+				
+				if (isPumpeAn) {
 					
 				}
-				
 				
 				
 			} catch (Exception e) {
@@ -228,8 +229,13 @@ public class CoreService {
 	}
 
 	public void speichereDaten() {
-		// TODO Auto-generated method stub
-		
+		try {
+			pvService.speichereDaten();
+		} catch (PvException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 	}
 
 }
